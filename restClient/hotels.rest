@@ -1,0 +1,8 @@
+GET http://localhost:5000/ HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImZhd2Fsczk4QGdtYWlsLmNvbSIsImZ1bGxOYW1lIjoiIiwiZW1haWwiOiIiLCJpc0FkbWluIjpmYWxzZSwiaWF0IjoxNzQyOTE3MDEyLCJleHAiOjE3NDI5MjA2MTJ9.Vb92xZ0bVdU8xXcd_ISto59nlC-j5ZTlpssx5mz8Zco
+
+###
+GET http://localhost:5000/cities HTTP/1.1
+
+###
+GET http://localhost:5000/types HTTP/1.1
