@@ -9,3 +9,12 @@ GET http://localhost:5000/types HTTP/1.1
 
 ###
 GET http://localhost:5000/hotels HTTP/1.1
+
+###
+POST http://localhost:5000/search-hotels HTTP/1.1
+Content-Type: application/json
+
+{
+    "city" : "Ha Noi",
+    "roomsTotal": 3
+}
