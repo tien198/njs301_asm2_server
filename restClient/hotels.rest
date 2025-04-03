@@ -16,5 +16,5 @@ Content-Type: application/json
 
 {
     "city" : "Ha Noi",
-    "roomsTotal": 3
+    "roomsTotal": "3"
 }

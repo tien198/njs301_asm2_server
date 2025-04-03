@@ -37,18 +37,14 @@ export function searchHotels(req, res) {
                     {
                         $match: {
                             $expr: {
-                                $and: [
+                                $in: [
+                                    '$_id',
                                     {
-                                        $in: [
-                                            '$_id',
-                                            {
-                                                $map: {
-                                                    input: '$$hotel_rooms',
-                                                    as: 'roomId',
-                                                    in: { $toObjectId: '$$roomId' }
-                                                }
-                                            }
-                                        ]
+                                        $map: {
+                                            input: '$$hotel_rooms',
+                                            as: 'roomId',
+                                            in: { $toObjectId: '$$roomId' }
+                                        }
                                     }
                                 ]
                             }
@@ -58,7 +54,7 @@ export function searchHotels(req, res) {
                 as: 'roomsList'
             }
         },
-        { $project: { 'city': 1, 'rooms': 1, 'roomsList': 1 } }
+        { $project: { 'roomsList': 0 } }
     ]).toArray()
         .then(searched =>
             res.status(200).json({
