@@ -1,3 +1,5 @@
+import { error } from 'console'
+
 import Hotel from '../models/hotel.js';
 import { getHotelsCol } from '../utils/mogoClient.js'
 
@@ -20,6 +22,7 @@ export function searchHotels(req, res) {
             $match: {
                 $expr: {
                     $and: [
+                        { $isArray: '$rooms' },
                         { $gte: [{ $size: '$rooms' }, +roomsTotal] },
                         { $eq: ['$city', city] }
                     ]
@@ -64,7 +67,7 @@ export function searchHotels(req, res) {
             })
         )
         .catch(err => {
-            error(err)
+            err && error(err)
             res.status(400).send('Couldn\'t find rooms!')
         })
 }
