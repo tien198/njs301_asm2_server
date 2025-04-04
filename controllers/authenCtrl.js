@@ -1,5 +1,5 @@
 import { hashSync, compareSync } from 'bcrypt'
-import { log } from 'console';
+import { log, error } from 'console';
 
 import User from '../models/user.js'
 import { jwtGen, jwtVerify } from '../utils/jwtToken.js';
@@ -24,23 +24,45 @@ export function login(req, res, next) {
         })
 }
 
-export function signUp(req, res, next) {
+export async function signUp(req, res, next) {
     const { userName, password, fullName, phoneNumber, email } = req.body
     const hash = hashSync(password, 12)
-    User.findOne({ userName })
-        .then(user => {
-            if (user)
-                return res.status(400).send('User existed')
-            const newUser = new User({ userName, password: hash, fullName, phoneNumber, email })
-            newUser.save()
-                .then(() => {
-                    return res.status(201).send('Created!')
-                })
-                .catch(err => {
-                    log(err)
-                    res.status(400).send(err)
-                })
+    let errors = {}
+    try {
+        const user = await User.findOne({ userName })
+        if (user)
+            errors.userName = 'UserName existed'
+    } catch (err) { error(err) }
+
+    if (password.length < 6)
+        errors.password = 'Password must be at least 6 characters'
+
+    if (Object.keys(errors).length > 0) {
+        const errorRes = {
+            status: 422,
+            message: 'Fail to create user',
+            errors: errors
+        }
+        return res.status(422).json(errorRes)
+    }
+
+    try {
+        const newUser = new User({ userName, password: hash, fullName, phoneNumber, email })
+        await newUser.save()
+
+        const payload = {
+            userName, fullName, phoneNumber, email
+        }
+        const jwt = 'Bearer ' + jwtGen(payload)
+
+        return res.status(201).send({
+            user: payload,
+            token: jwt
         })
+    } catch (err) {
+        error(err)
+        next(err)
+    }
 }
 
 export default { login, signUp }

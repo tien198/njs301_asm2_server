@@ -25,6 +25,12 @@ const __dirname = path.dirname(__filename)
 const app = express()
 app.use(cors())
 app.use(express.json())
+// app.use((req,res,next)=>{
+//     res.setHeader('Access-Control-Allow-Origin', '*');
+//     log(req.body)
+//     next()
+// })
+
 app.use(express.static(path.join(__dirname, 'public')))
 
 
@@ -44,7 +50,11 @@ app.use(citiesRouter)
 app.use(typesRouter)
 app.use(hotelsRouter)
 
-
+app.use((error, req, res, next) => {
+    const status = error.status || 500
+    error.message = error.message || 'Internal Serser Error'
+    res.status(status).json(error)
+})
 
 mongoose.connect(process.env.MongoDb_URI)
     .then(() => mongodb.connect())
@@ -52,7 +62,6 @@ mongoose.connect(process.env.MongoDb_URI)
         app.listen(5000)
     )
     .catch(err => error(err))
-
 
 /*
 mongoimport --uri="mongodb://127.0.0.1:27017/asm2?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.3.9" --collection="hotels" --file hotels.json --jsonArray
