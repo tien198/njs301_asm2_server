@@ -17,7 +17,10 @@ export function login(req, res, next) {
             }
             const jwt = 'Bearer ' + jwtGen(payload)
 
-            return res.status(202).send(jwt)
+            return res.status(202).json({
+                user: payload,
+                token: jwt
+            })
         })
 }
 
