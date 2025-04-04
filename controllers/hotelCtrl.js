@@ -1,4 +1,4 @@
-import { error } from 'console'
+import { error, log } from 'console'
 
 import Hotel from '../models/hotel.js';
 import { getHotelsCol } from '../utils/mogoClient.js'
@@ -16,7 +16,9 @@ export function getHotels(req, res) {
 }
 
 export function searchHotels(req, res) {
-    const { city, roomsTotal } = req.body
+    const { city, roomsTotal, checkInDate, minPrice, maxPrice } = req.body
+
+    
     getHotelsCol().aggregate([
         {
             $match: {
@@ -42,8 +44,8 @@ export function searchHotels(req, res) {
                                     {
                                         $map: {
                                             input: '$$hotel_rooms',
-                                            as: 'roomId',
-                                            in: { $toObjectId: '$$roomId' }
+                                            // as: 'roomId',
+                                            in: { $toObjectId: '$$this' }
                                         }
                                     }
                                 ]
@@ -54,6 +56,7 @@ export function searchHotels(req, res) {
                 as: 'roomsList'
             }
         },
+        // Phần này cần thêm lọc theo: checkInDate, minPrice, maxPrice 
         { $project: { 'roomsList': 0 } }
     ]).toArray()
         .then(searched =>
