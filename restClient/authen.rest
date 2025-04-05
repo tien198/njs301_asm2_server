@@ -3,7 +3,7 @@ Content-Type: application/json
 
 {
     "userName": "fawals98@gmail.com",
-    "password": "123456"
+    "password": "1234561"
 }
 
 ###
@@ -12,5 +12,5 @@ Content-Type: application/json
 
 {
     "userName": "fawals98@gmail.com",
-    "password": "123123"
+    "password": "123456"
 }

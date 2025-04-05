@@ -4,24 +4,33 @@ import { log, error } from 'console';
 import User from '../models/user.js'
 import { jwtGen, jwtVerify } from '../utils/jwtToken.js';
 
-export function login(req, res, next) {
+export async function login(req, res, next) {
     const { userName, password } = req.body
-    User.findOne({ userName })
-        .then(user => {
-            if (!user || !compareSync(password, user.password))
-                return res.status(401).send('Unauthorize!')
+    try {
+        const user = await User.findOne({ userName })
+        if (!user || !compareSync(password, user.password)) {
+            const errorRes = {
+                message: 'Fail to login',
+                errors: { credential: 'wrong password or username' }
+            }
+            return res.status(401).json(errorRes)
+        }
 
+        if (user) {
             const { userName, fullName, phoneNumber, email, isAdmin } = user
             const payload = {
                 userName, fullName, phoneNumber, email, isAdmin
             }
             const jwt = 'Bearer ' + jwtGen(payload)
-
             return res.status(202).json({
                 user: payload,
                 token: jwt
             })
-        })
+        }
+    } catch (err) {
+        error(err)
+        next(err)
+    }
 }
 
 export async function signUp(req, res, next) {
