@@ -3,22 +3,39 @@ import { error, log } from 'console'
 import Hotel from '../models/hotel.js';
 import { getHotelsCol } from '../utils/mogoClient.js'
 
+import { ObjectId } from 'mongodb'
 
-export function getHotels(req, res) {
+
+export function getHotels(req, res, next) {
     Hotel.find()
         .then(hotels => {
             res.status(200).json(hotels);
         })
         .catch(err => {
-            error(err)
-            res.status(500).json({ error: err });
+            error(err); next(err)
         });
 }
 
-export function searchHotels(req, res) {
+export async function getHotel(req, res, next) {
+    const hotelId = req.params.hotelId
+    try {
+        const hotel = await Hotel.findById(hotelId)
+        if (hotel)
+            return res.status(200).json(hotel)
+    } catch (err) {
+        error(err)
+        const errRs = {
+            status: 404, message: `Could't find hotel with id: ${hotelId}`
+        }
+        next(errRs)
+    }
+
+}
+
+export function searchHotels(req, res, next) {
     const { city, roomsTotal, checkInDate, minPrice, maxPrice } = req.body
 
-    
+
     getHotelsCol().aggregate([
         {
             $match: {
@@ -67,8 +84,11 @@ export function searchHotels(req, res) {
         )
         .catch(err => {
             err && error(err)
-            res.status(400).send('Couldn\'t find rooms!')
+            const errRs = {
+                status: 400, message: 'Couldn\'t find rooms!'
+            }
+            next(errRs)
         })
 }
 
-export default { getHotels, searchHotels }
+export default { getHotels, getHotel, searchHotels }

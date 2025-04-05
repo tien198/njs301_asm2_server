@@ -11,6 +11,9 @@ GET http://localhost:5000/types HTTP/1.1
 GET http://localhost:5000/hotels HTTP/1.1
 
 ###
+GET http://localhost:5000/hotel/6311a9c64a642f01423490bf HTTP/1.1
+
+###
 POST http://localhost:5000/search-hotels HTTP/1.1
 Content-Type: application/json
 
