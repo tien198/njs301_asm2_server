@@ -19,17 +19,41 @@ export function getHotels(req, res, next) {
 export async function getHotel(req, res, next) {
     const hotelId = req.params.hotelId
     try {
-        const hotel = await Hotel.findById(hotelId)
-        if (hotel)
-            return res.status(200).json(hotel)
-    } catch (err) {
-        error(err)
-        const errRs = {
-            status: 404, message: `Could't find hotel with id: ${hotelId}`
-        }
-        next(errRs)
-    }
+        const aggregate = await Hotel.aggregate([
+            {
+                $match: { _id: ObjectId.createFromHexString(hotelId) }
+            },
+            {
+                $lookup: {
+                    from: 'rooms',
+                    let: { hotel_rooms: '$rooms' },
+                    pipeline:[
+                        {
+                            $match: {
+                                $expr: {
+                                    $in: [
+                                        '$_id',
+                                        {
+                                            $map: {
+                                                input: '$$hotel_rooms',
+                                                in: { $toObjectId: '$$this' }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    ],
+                    as: 'roomsList'
+                }
+            }
+        ])
+        const hotel = aggregate[0]
+        return res.status(200).json(hotel)
 
+    } catch (err) {
+        error(err); next(err)
+    }
 }
 
 export function searchHotels(req, res, next) {
