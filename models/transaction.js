@@ -8,7 +8,7 @@ const transactionSchema = new Schema({
     dateEnd: { type: Date, require: true },
     price: { type: Number, require: true },
     payment: { type: String, enum: ['Credit', 'Card', 'Cash'], require: true },
-    status: { type: String, enum: ['Booked', 'Checkin', 'Checkout'], require: true }
+    status: { type: String, enum: ['Booked', 'Checkin', 'Checkout'], default: 'Booked' }
 })
 
 export default Mongoose.model('Transaction', transactionSchema)
