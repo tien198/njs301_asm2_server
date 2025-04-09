@@ -14,6 +14,7 @@ import citiesRouter from './routes/citiesRouter.js'
 import typesRouter from './routes/typeRouter.js'
 import hotelsRouter from './routes/hotelsRouter.js'
 import transactionRouter from './routes/transactionRouter.js'
+import ErrorRespone from './models/errorRespone.js'
 
 
 
@@ -56,7 +57,8 @@ app.use((error, req, res, next) => {
     const status = error.status || 500
     error.message = error.message || 'Internal Serser Error'
     console.error(error)
-    res.status(status).json(error)
+    const errorRes = new ErrorRespone(error.message, status)
+    res.status(status).json(errorRes)
 })
 
 mongoose.connect(process.env.MongoDb_URI)

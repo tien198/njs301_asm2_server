@@ -28,6 +28,6 @@ Content-Type: application/json
 
 {
     "hotelId":"6311a9c64a642f01423490bf",
-    "dateStart":"2025-04-09T07:18:37.890Z",
-    "dateEnd":"2025-04-09T07:18:37.890Z"
+    "dateStart": "2025-04-09T07:18:37.890Z",
+    "dateEnd": "2025-04-09T07:20:37.890Z"
 }
