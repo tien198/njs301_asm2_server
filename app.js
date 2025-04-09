@@ -13,6 +13,7 @@ import authenRouter from './routes/authenRouter.js'
 import citiesRouter from './routes/citiesRouter.js'
 import typesRouter from './routes/typeRouter.js'
 import hotelsRouter from './routes/hotelsRouter.js'
+import transactionRouter from './routes/transactionRouter.js'
 
 
 
@@ -49,10 +50,12 @@ app.use(authenRouter)
 app.use(citiesRouter)
 app.use(typesRouter)
 app.use(hotelsRouter)
+app.use(transactionRouter)
 
 app.use((error, req, res, next) => {
     const status = error.status || 500
     error.message = error.message || 'Internal Serser Error'
+    console.error(error)
     res.status(status).json(error)
 })
 
