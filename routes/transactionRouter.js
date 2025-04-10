@@ -5,7 +5,7 @@ import Transaction from '../models/transaction.js'
 
 const router = Router()
 
-router.post('/find-transactions', async (req, res, next) => {
+router.post('/check-availability-rooms', async (req, res, next) => {
     try {
         const { hotelId } = req.body
         let { dateStart, dateEnd } = req.body
@@ -15,17 +15,21 @@ router.post('/find-transactions', async (req, res, next) => {
         if (Number.isNaN(dateStart.getTime()) || Number.isNaN(dateEnd.getTime()))
             throw Error('Invalid dateStart or dateEnd')
 
-        const transactions = await Transaction.find({
+        const rooms = await Transaction.find({
             hotelId: hotelId,
             dateStart: { $gte: dateStart },
             dateEnd: { $lte: dateEnd }
         })
-        res.status(200).json(transactions)
+            .select('rooms -_id')
+            .lean()
+        res.status(200).json(rooms)
     } catch (err) {
         error(err)
         return next(err)
     }
 })
+
+//  booking <= ________________|start _________ <= booking <= ____________ | end
 
 router.post('/add-transaction', async (req, res, next) => {
     try {
@@ -37,8 +41,8 @@ router.post('/add-transaction', async (req, res, next) => {
 
         const exTrans = await Transaction.find({
             hotelId: hotelId,
-            dateStart: { $lte: dateStart },
-            dateEnd: { $gte: dateEnd }
+            dateStart: { $gte: dateStart },
+            dateEnd: { $lte: dateEnd }
         }).lean()
 
         const roomsInBookingTime = exTrans.reduce((acc, curr) =>
@@ -62,3 +66,4 @@ router.post('/add-transaction', async (req, res, next) => {
 })
 
 export default router
+

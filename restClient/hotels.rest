@@ -23,13 +23,13 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:5000/find-transactions HTTP/1.1
+POST http://localhost:5000/check-availability-rooms HTTP/1.1
 Content-Type: application/json
 
 {
-    "hotelId":"6311a9c64a642f01423490bf",
-    "dateStart": "2025-04-09T07:18:37.890Z",
-    "dateEnd": "2025-04-09T07:20:37.890Z"
+    "hotelId":"6311a9c64a642f01423490bf",   
+    "dateStart": "2025-04-09T07:40:37.890Z",
+    "dateEnd": "2025-04-09T08:20:37.890Z"
 }
 
 ###
@@ -37,10 +37,13 @@ POST http://localhost:5000/add-transaction HTTP/1.1
 Content-Type: application/json
 
 {
-    "user": "tien",
-    "rooms": ["123","321","113"],
+    "user": "tienvn998@gmail.com",
+    "rooms": [{
+        "roomId": "6310e01a8cfecfd90b30ca30",
+        "roomNumbers": ["123","321","113"]
+    }],
     "hotelId":"6311a9c64a642f01423490bf",
-    "dateStart": "2025-04-09T07:30:37.890Z",
+    "dateStart": "2025-04-09T07:40:37.890Z",
     "dateEnd": "2025-04-09T08:20:37.890Z",
     "price":1000, 
     "payment":"Credit"

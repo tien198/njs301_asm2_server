@@ -1,9 +1,14 @@
 import Mongoose, { Schema } from 'mongoose';
 
+const nestedRoom = {
+    roomId: String,
+    roomNumbers: [String]
+}
+
 const transactionSchema = new Schema({
     user: { type: String, require: true },
     hotelId: { type: String, require: true },
-    rooms: { type: [String] },
+    rooms: [nestedRoom],
     dateStart: { type: Date, require: true },
     dateEnd: { type: Date, require: true },
     price: { type: Number, require: true },
