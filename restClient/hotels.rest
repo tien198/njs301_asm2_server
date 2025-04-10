@@ -23,7 +23,7 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:5000/check-availability-rooms HTTP/1.1
+POST http://localhost:5000/check-booked-rooms HTTP/1.1
 Content-Type: application/json
 
 {

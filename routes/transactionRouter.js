@@ -5,7 +5,7 @@ import Transaction from '../models/transaction.js'
 
 const router = Router()
 
-router.post('/check-availability-rooms', async (req, res, next) => {
+router.post('/check-booked-rooms', async (req, res, next) => {
     try {
         const { hotelId } = req.body
         let { dateStart, dateEnd } = req.body
@@ -15,14 +15,30 @@ router.post('/check-availability-rooms', async (req, res, next) => {
         if (Number.isNaN(dateStart.getTime()) || Number.isNaN(dateEnd.getTime()))
             throw Error('Invalid dateStart or dateEnd')
 
-        const rooms = await Transaction.find({
+        const roomsFields = await Transaction.find({
             hotelId: hotelId,
             dateStart: { $gte: dateStart },
             dateEnd: { $lte: dateEnd }
         })
             .select('rooms -_id')
             .lean()
-        res.status(200).json(rooms)
+        const roomValues = roomsFields.reduce((acc, curr) =>
+            [...acc, ...curr.rooms],
+            []
+        )
+        // many Transactions (roomValues) may has the same 'roomId'
+        // Group that into unique roomIds
+        const roomIds = roomValues.map(i => i.roomId)
+        const uniqueRoomIds = [...new Set(roomIds)]
+        const roomGroupEntries = uniqueRoomIds.map(i => {
+            const roomsGroup = roomValues.reduce((acc, curr) => {
+                if (curr.roomId === i)
+                    return [...acc, ...curr.roomNumbers]
+            }, [])
+            return [i, roomsGroup]
+        })
+
+        res.status(200).json(roomGroupEntries)
     } catch (err) {
         error(err)
         return next(err)
