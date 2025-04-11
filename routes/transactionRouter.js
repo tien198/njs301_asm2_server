@@ -2,6 +2,7 @@ import { Router } from 'express'
 import { error, log } from 'console'
 
 import Transaction from '../models/transaction.js'
+import { RoomTranfer } from '../models/dataModels/transactionTranfer.js'
 
 const router = Router()
 
@@ -15,14 +16,14 @@ router.post('/check-booked-rooms', async (req, res, next) => {
         if (Number.isNaN(dateStart.getTime()) || Number.isNaN(dateEnd.getTime()))
             throw Error('Invalid dateStart or dateEnd')
 
-        const roomsFields = await Transaction.find({
+        const exTrans = await Transaction.find({
             hotelId: hotelId,
             dateStart: { $gte: dateStart },
             dateEnd: { $lte: dateEnd }
         })
             .select('rooms -_id')
             .lean()
-        const roomValues = roomsFields.reduce((acc, curr) =>
+        const roomValues = exTrans.reduce((acc, curr) =>
             [...acc, ...curr.rooms],
             []
         )
@@ -30,15 +31,18 @@ router.post('/check-booked-rooms', async (req, res, next) => {
         // Group that into unique roomIds
         const roomIds = roomValues.map(i => i.roomId)
         const uniqueRoomIds = [...new Set(roomIds)]
-        const roomGroupEntries = uniqueRoomIds.map(i => {
-            const roomsGroup = roomValues.reduce((acc, curr) => {
+        const roomGroups = uniqueRoomIds.map(i => {
+            const groupedRoomNums = roomValues.reduce((acc, curr) => {
                 if (curr.roomId === i)
                     return [...acc, ...curr.roomNumbers]
             }, [])
-            return [i, roomsGroup]
+            return {
+                roomId: i,
+                roomNumbers: groupedRoomNums
+            }
         })
 
-        res.status(200).json(roomGroupEntries)
+        res.status(200).json(roomGroups)
     } catch (err) {
         error(err)
         return next(err)
@@ -59,18 +63,43 @@ router.post('/add-transaction', async (req, res, next) => {
             hotelId: hotelId,
             dateStart: { $gte: dateStart },
             dateEnd: { $lte: dateEnd }
-        }).lean()
-
-        const roomsInBookingTime = exTrans.reduce((acc, curr) =>
+        })
+            .select('rooms -_id')
+            .lean()
+        const roomValues = exTrans.reduce((acc, curr) =>
             [...acc, ...curr.rooms],
-            [] // reduce initial value
+            []
         )
-
-        for (const r of rooms) {
-            if (roomsInBookingTime.includes(r)) {
-                throw Error(`Room was booked!`)
+        // many Transactions (roomValues) may has the same 'roomId'
+        // Group that into unique roomIds
+        const roomIds = roomValues.map(i => i.roomId)
+        const uniqueRoomIds = [...new Set(roomIds)]
+        const roomGroups = uniqueRoomIds.map(i => {
+            const groupedRoomNums = roomValues.reduce((acc, curr) => {
+                if (curr.roomId === i)
+                    return [...acc, ...curr.roomNumbers]
+            }, [])
+            return {
+                roomId: i,
+                roomNumbers: groupedRoomNums
             }
+        })
+        if (roomGroups.length > 0) {
+            // check the exist roomId and roomNumbers
+            rooms.forEach(room => {
+                const bookedRoomNumbers = roomGroups
+                    .find(r => r.roomId === room.roomId)
+                    .roomNumbers
+
+                if (uniqueRoomIds.includes(room.roomId)) {
+                    room.roomNumbers.forEach(rNum => {
+                        if (bookedRoomNumbers.includes(rNum))
+                            throw Error('There is some rooms was booked at the time!')
+                    });
+                }
+            });
         }
+
 
         await Transaction.insertOne({ user, hotelId, rooms, dateStart, dateEnd, price, payment })
         return res.status(201).json('Booking success!')
