@@ -2,7 +2,6 @@ import { Router } from 'express'
 import { error, log } from 'console'
 
 import Transaction from '../models/transaction.js'
-import { RoomTranfer } from '../models/dataModels/transactionTranfer.js'
 
 const router = Router()
 
@@ -105,7 +104,6 @@ router.post('/add-transaction', async (req, res, next) => {
         return res.status(201).json('Booking success!')
 
     } catch (err) {
-        error(err)
         return next(err)
     }
 })
