@@ -8,17 +8,17 @@ const router = Router()
 router.post('/check-booked-rooms', async (req, res, next) => {
     try {
         const { hotelId } = req.body
-        let { dateStart, dateEnd } = req.body
+        let { startDate, endDate } = req.body
 
-        dateStart = new Date(dateStart)
-        dateEnd = new Date(dateEnd)
-        if (Number.isNaN(dateStart.getTime()) || Number.isNaN(dateEnd.getTime()))
-            throw Error('Invalid dateStart or dateEnd')
+        startDate = new Date(startDate)
+        endDate = new Date(endDate)
+        if (Number.isNaN(startDate.getTime()) || Number.isNaN(endDate.getTime()))
+            throw Error('Invalid startDate or endDate')
 
         const exTrans = await Transaction.find({
             hotelId: hotelId,
-            dateStart: { $gte: dateStart },
-            dateEnd: { $lte: dateEnd }
+            startDate: { $gte: startDate },
+            endDate: { $lte: endDate }
         })
             .select('rooms -_id')
             .lean()
@@ -54,14 +54,14 @@ router.post('/add-transaction', async (req, res, next) => {
     try {
         const {
             user, hotelId, rooms,
-            dateStart, dateEnd,
+            startDate, endDate,
             price, payment
         } = req.body
 
         const exTrans = await Transaction.find({
             hotelId: hotelId,
-            dateStart: { $gte: dateStart },
-            dateEnd: { $lte: dateEnd }
+            startDate: { $gte: startDate },
+            endDate: { $lte: endDate }
         })
             .select('rooms -_id')
             .lean()
@@ -100,7 +100,7 @@ router.post('/add-transaction', async (req, res, next) => {
         }
 
 
-        await Transaction.insertOne({ user, hotelId, rooms, dateStart, dateEnd, price, payment })
+        await Transaction.insertOne({ user, hotelId, rooms, startDate, endDate, price, payment })
         return res.status(201).json('Booking success!')
 
     } catch (err) {

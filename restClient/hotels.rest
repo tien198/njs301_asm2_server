@@ -28,8 +28,8 @@ Content-Type: application/json
 
 {
     "hotelId":"6311a9c64a642f01423490bf",   
-    "dateStart": "2025-04-09T07:40:37.890Z",
-    "dateEnd": "2025-04-09T08:20:37.890Z"
+    "startDate": "2025-04-09T07:40:37.890Z",
+    "endDate": "2025-04-09T08:20:37.890Z"
 }
 
 ###
@@ -43,8 +43,8 @@ Content-Type: application/json
         "roomNumbers": ["123","321","113"]
     }],
     "hotelId":"6311a9c64a642f01423490bf",
-    "dateStart": "2025-04-09T07:40:37.890Z",
-    "dateEnd": "2025-04-09T08:20:37.890Z",
+    "startDate": "2025-04-09T07:40:37.890Z",
+    "endDate": "2025-04-09T08:20:37.890Z",
     "price":1000, 
     "payment":"Credit"
 }
