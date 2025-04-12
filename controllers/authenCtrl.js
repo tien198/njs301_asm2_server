@@ -7,7 +7,8 @@ import { jwtGen, jwtVerify } from '../utils/jwtToken.js';
 export async function login(req, res, next) {
     const { userName, password } = req.body
     try {
-        const user = await User.findOne({ userName })
+        let user = await User.findOne({ userName })
+        if (!user) user = await User.findOne({ email: userName })
         if (!user || !compareSync(password, user.password)) {
             const errorRes = {
                 message: 'Fail to login',
@@ -34,7 +35,9 @@ export async function login(req, res, next) {
 }
 
 export async function signUp(req, res, next) {
-    const { userName, password, fullName, phoneNumber, email } = req.body
+    const { userName, password, fullName, phoneNumber, email: inputEmail } = req.body
+    const email = inputEmail || userName
+    
     const hash = hashSync(password, 12)
     let errors = {}
     try {
