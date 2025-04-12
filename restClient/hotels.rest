@@ -11,7 +11,7 @@ GET http://localhost:5000/types HTTP/1.1
 GET http://localhost:5000/hotels HTTP/1.1
 
 ###
-GET http://localhost:5000/hotel/6311a9c64a642f01423490bf HTTP/1.1
+GET http://localhost:5000/hotel/6311bf37f2fce6ea18172fb6 HTTP/1.1
 
 ###
 POST http://localhost:5000/search-hotels HTTP/1.1
@@ -47,4 +47,30 @@ Content-Type: application/json
     "endDate": "2025-04-09T08:20:37.890Z",
     "price":1000, 
     "payment":"Credit"
+}
+
+
+### An error
+POST http://localhost:5000/add-transaction HTTP/1.1
+Content-Type: application/json
+
+{
+    "startDate": "2025-04-11T17:00:00.000Z",
+    "endDate": "2025-04-25T17:00:00.000Z",
+    "fullName": "",
+    "email": "",
+    "hotelId": "6311bd07f2fce6ea18172fa3",
+    "rooms": [
+        {
+            "roomId": "6311be52f2fce6ea18172faf",
+            "roomNumbers": [
+                202,
+                203
+            ]
+        }
+    ],
+    "price": 0,
+    "payment": "Credit",
+    "phone": "",
+    "cardNumber": ""
 }
