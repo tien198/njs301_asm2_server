@@ -30,16 +30,8 @@ router.post('/check-booked-rooms', async (req, res, next) => {
         // Group that into unique roomIds
         const roomIds = roomValues.map(i => i.roomId)
         const uniqueRoomIds = [...new Set(roomIds)]
-        const roomGroups = uniqueRoomIds.map(i => {
-            const groupedRoomNums = roomValues.reduce((acc, curr) => {
-                if (curr.roomId === i)
-                    return [...acc, ...curr.roomNumbers]
-            }, [])
-            return {
-                roomId: i,
-                roomNumbers: groupedRoomNums
-            }
-        })
+        
+        const roomGroups = groupRooms(uniqueRoomIds, existRooms)
 
         res.status(200).json(roomGroups)
     } catch (err) {
@@ -65,34 +57,33 @@ router.post('/add-transaction', async (req, res, next) => {
         })
             .select('rooms -_id')
             .lean()
-        const roomValues = exTrans.reduce((acc, curr) =>
+        const existRooms = exTrans.reduce((acc, curr) =>
             [...acc, ...curr.rooms],
             []
         )
         // many Transactions (roomValues) may has the same 'roomId'
         // Group that into unique roomIds
-        const roomIds = roomValues.map(i => i.roomId)
+        const roomIds = existRooms.map(i => i.roomId)
         const uniqueRoomIds = [...new Set(roomIds)]
-        const roomGroups = uniqueRoomIds.map(i => {
-            const groupedRoomNums = roomValues.reduce((acc, curr) => {
-                if (curr.roomId === i)
-                    return [...acc, ...curr.roomNumbers]
-            }, [])
-            return {
-                roomId: i,
-                roomNumbers: groupedRoomNums
-            }
-        })
+
+        const roomGroups = groupRooms(uniqueRoomIds, existRooms)
+
         if (roomGroups.length > 0) {
             // check the exist roomId and roomNumbers
             reqRooms.forEach(room => {
-                const bookedRoomNumbers = roomGroups
+                const bookedRoom = roomGroups
                     .find(r => r.roomId === room.roomId)
-                    .roomNumbers
+                // is exist room?
+                if (!bookedRoom)
+                    return false
+
+                // is exist any roomNumbers?
+                const bookedRoomNumbers = bookedRoom.roomNumbers
 
                 if (uniqueRoomIds.includes(room.roomId)) {
                     room.roomNumbers.forEach(rNum => {
                         if (bookedRoomNumbers.includes(rNum.toString()))
+                            // throw if any exist
                             throw Error('There is some rooms was booked at the time!')
                     });
                 }
@@ -110,3 +101,22 @@ router.post('/add-transaction', async (req, res, next) => {
 
 export default router
 
+
+
+
+function groupRooms(uniqueRoomIds, existRooms) {
+    const roomGroups = uniqueRoomIds.map(i => {
+        const groupedRoomNums = existRooms.reduce((acc, curr) => {
+            if (curr.roomId === i)
+                return [...acc, ...curr.roomNumbers]
+            else
+                return acc
+        }, [])
+        return {
+            roomId: i,
+            roomNumbers: groupedRoomNums
+        }
+    })
+
+    return roomGroups
+}
