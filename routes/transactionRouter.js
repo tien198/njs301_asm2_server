@@ -100,7 +100,7 @@ router.post('/add-transaction', async (req, res, next) => {
         }
 
 
-        await Transaction.insertOne({ user, hotelId, rooms, startDate, endDate, price, payment })
+        await Transaction.insertOne({ user, hotelId, rooms: reqRooms, startDate, endDate, price, payment })
         return res.status(201).json('Booking success!')
 
     } catch (err) {
