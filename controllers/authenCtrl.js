@@ -2,7 +2,7 @@ import { hashSync, compareSync } from 'bcrypt'
 import { log, error } from 'console';
 
 import User from '../models/user.js'
-import { jwtGen, jwtVerify } from '../utils/jwtToken.js';
+import { jwtGen, jwtVerify } from '../utilities/jwtToken.js';
 
 export async function login(req, res, next) {
     const { userName, password } = req.body

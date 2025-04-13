@@ -7,7 +7,7 @@ import mongoose from 'mongoose'
 import { error, log } from 'console'
 import { fileURLToPath } from 'url'
 
-import mongodb from './utils/mogoClient.js'
+import mongodb from './utilities/mogoClient.js'
 
 import authenRouter from './routes/authenRouter.js'
 import citiesRouter from './routes/citiesRouter.js'

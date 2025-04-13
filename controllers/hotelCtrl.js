@@ -1,7 +1,7 @@
 import { error, log } from 'console'
 
 import Hotel from '../models/hotel.js';
-import { getHotelsCol } from '../utils/mogoClient.js'
+import { getHotelsCol } from '../utilities/mogoClient.js'
 
 import { ObjectId } from 'mongodb'
 
