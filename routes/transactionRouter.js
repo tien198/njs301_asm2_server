@@ -53,7 +53,7 @@ router.post('/check-booked-rooms', async (req, res, next) => {
 router.post('/add-transaction', async (req, res, next) => {
     try {
         const {
-            user, hotelId, rooms,
+            user, hotelId, rooms: reqRooms,
             startDate, endDate,
             price, payment
         } = req.body
@@ -85,14 +85,14 @@ router.post('/add-transaction', async (req, res, next) => {
         })
         if (roomGroups.length > 0) {
             // check the exist roomId and roomNumbers
-            rooms.forEach(room => {
+            reqRooms.forEach(room => {
                 const bookedRoomNumbers = roomGroups
                     .find(r => r.roomId === room.roomId)
                     .roomNumbers
 
                 if (uniqueRoomIds.includes(room.roomId)) {
                     room.roomNumbers.forEach(rNum => {
-                        if (bookedRoomNumbers.includes(rNum))
+                        if (bookedRoomNumbers.includes(rNum.toString()))
                             throw Error('There is some rooms was booked at the time!')
                     });
                 }
