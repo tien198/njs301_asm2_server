@@ -37,7 +37,10 @@ POST http://localhost:5000/add-transaction HTTP/1.1
 Content-Type: application/json
 
 {
-    "user": "tienvn998@gmail.com",
+    "user": {
+        "userId" : "67e2c7ba2fa07012be9e88c9",
+        "userName": "tienvn998@gmail.com"
+    },
     "rooms": [{
         "roomId": "6310e01a8cfecfd90b30ca30",
         "roomNumbers": ["123","321","113"]
@@ -49,28 +52,10 @@ Content-Type: application/json
     "payment":"Credit"
 }
 
-
-### An error
-POST http://localhost:5000/add-transaction HTTP/1.1
+###
+POST http://localhost:5000/get-transactions HTTP/1.1
 Content-Type: application/json
 
 {
-    "startDate": "2025-04-11T17:00:00.000Z",
-    "endDate": "2025-04-25T17:00:00.000Z",
-    "fullName": "",
-    "email": "",
-    "hotelId": "6311bd07f2fce6ea18172fa3",
-    "rooms": [
-        {
-            "roomId": "6311be52f2fce6ea18172faf",
-            "roomNumbers": [
-                202,
-                203
-            ]
-        }
-    ],
-    "price": 0,
-    "payment": "Credit",
-    "phone": "",
-    "cardNumber": ""
+    "userId" : "67e2c7ba2fa07012be9e88c9"
 }

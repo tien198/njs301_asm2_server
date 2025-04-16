@@ -6,7 +6,11 @@ const nestedRoom = {
 }
 
 const transactionSchema = new Schema({
-    user: { type: String, require: true },
+    user: {
+        userId: { type: Schema.Types.ObjectId, require: true },
+        userName: { type: String, require: true },
+        
+    },
     hotelId: { type: String, require: true },
     rooms: [nestedRoom],
     startDate: { type: Date, require: true },

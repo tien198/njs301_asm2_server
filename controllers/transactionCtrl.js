@@ -1,4 +1,5 @@
 import { error, log } from 'console'
+import { ObjectId } from 'mongodb'
 
 import Transaction from '../models/transaction.js'
 
@@ -93,14 +94,21 @@ export async function addTransaction(req, res, next) {
             });
         }
 
+        const userObj = {
+            userId: ObjectId.createFromHexString(user.userId),
+            userName: user.userName
+        }
 
-        await Transaction.insertOne({ user, hotelId, rooms: reqRooms, startDate, endDate, price, payment })
+        await Transaction.insertOne({ user: userObj, hotelId, rooms: reqRooms, startDate, endDate, price, payment })
         return res.status(201).json('Booking success!')
 
     } catch (err) {
         return next(err)
     }
 }
+
+// get Transaction according userId
+// export
 
 
 export default { checkBookedRooms, addTransaction }
