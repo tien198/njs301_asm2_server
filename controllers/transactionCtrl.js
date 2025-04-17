@@ -108,7 +108,16 @@ export async function addTransaction(req, res, next) {
 }
 
 // get Transaction according userId
-// export
+export async function getTransactions(req, res, next) {
+    try {
+        const { userId } = req.body
+        const trans = await Transaction.find({ 'user.userId': userId }).lean()
+        res.status(200).json(trans)
+
+    } catch (err) {
+        next(err)
+    }
+}
 
 
-export default { checkBookedRooms, addTransaction }
+export default { checkBookedRooms, addTransaction, getTransactions }

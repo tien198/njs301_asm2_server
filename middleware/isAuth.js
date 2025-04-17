@@ -1,4 +1,4 @@
-import { jwtVerify } from '../utils/jwtToken.js';
+import { jwtVerify } from '../utilities/jwtToken.js';
 
 export default function isAuth(req, res, next) {
     const jwt = req.headers.authorization;
@@ -12,5 +12,7 @@ export default function isAuth(req, res, next) {
             req.user = decoded
             next()
         })
-        .catch((err) => res.status(401).send("Unauthorized"))
+        .catch((err) =>
+            next({ status: 401, message: 'Unauthorized' })
+        )
 }

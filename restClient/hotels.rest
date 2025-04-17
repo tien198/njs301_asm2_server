@@ -35,6 +35,8 @@ Content-Type: application/json
 ###
 POST http://localhost:5000/add-transaction HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImZhd2Fsczk4QGdtYWlsLmNvbSIsImVtYWlsIjoiZmF3YWxzOThAZ21haWwuY29tIiwiaWF0IjoxNzQ0ODU0ODU2LCJleHAiOjE3NDQ4NTg0NTZ9.2zr0-nZsHf0G0EBOAajYG8QedBAeUtUEBwJAYbuOUGI
+
 
 {
     "user": {
@@ -55,6 +57,7 @@ Content-Type: application/json
 ###
 POST http://localhost:5000/get-transactions HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImZhd2Fsczk4QGdtYWlsLmNvbSIsImVtYWlsIjoiZmF3YWxzOThAZ21haWwuY29tIiwiaWF0IjoxNzQ0ODU0ODU2LCJleHAiOjE3NDQ4NTg0NTZ9.2zr0-nZsHf0G0EBOAajYG8QedBAeUtUEBwJAYbuOUGI
 
 {
     "userId" : "67e2c7ba2fa07012be9e88c9"
