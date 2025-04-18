@@ -48,13 +48,13 @@ export async function checkBookedRooms(req, res, next) {
 export async function addTransaction(req, res, next) {
     try {
         const {
-            user, hotelId, rooms: reqRooms,
+            user, hotelRef, rooms: reqRooms,
             startDate, endDate,
             price, payment
         } = req.body
 
         const exTrans = await Transaction.find({
-            hotelId: hotelId,
+            hotelRef: hotelRef,
             startDate: { $gte: startDate },
             endDate: { $lte: endDate }
         })
@@ -95,11 +95,15 @@ export async function addTransaction(req, res, next) {
         }
 
         const userObj = {
-            userId: ObjectId.createFromHexString(user.userId),
+            userRef: ObjectId.createFromHexString(user.userRef),
             userName: user.userName
         }
+        const hotelRefCasted = ObjectId.createFromHexString(hotelRef)
 
-        await Transaction.insertOne({ user: userObj, hotelId, rooms: reqRooms, startDate, endDate, price, payment })
+        await Transaction.insertOne({
+            user: userObj, hotelRef: hotelRefCasted, rooms: reqRooms,
+            startDate, endDate, price, payment
+        })
         return res.status(201).json('Booking success!')
 
     } catch (err) {
@@ -113,8 +117,8 @@ export async function getTransactions(req, res, next) {
         const { userId } = req.body
         // if using populate query in nested doc
         // const trans = await Transaction.find({ 'user.userId': userId }).populate('user.userId', 'userName')
-        const trans = await Transaction.find({ 'user.userId': userId }).lean()
-        
+        const trans = await Transaction.find({ 'user.userRef': userId }).populate('hotelRef', '-_id name')
+
         res.status(200).json(trans)
 
     } catch (err) {

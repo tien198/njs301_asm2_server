@@ -40,14 +40,14 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODAwN
 
 {
     "user": {
-        "userId" : "68005f486430559e99ba7748",
+        "userRef" : "68005f486430559e99ba7748",
         "userName": "tienvn998@gmail.com"
     },
     "rooms": [{
         "roomId": "6310e01a8cfecfd90b30ca30",
         "roomNumbers": ["123","321","113"]
     }],
-    "hotelId":"6311a9c64a642f01423490bf",
+    "hotelRef":"67f60e7342f92ecc21e43269",
     "startDate": "2025-04-09T07:40:37.890Z",
     "endDate": "2025-04-09T08:20:37.890Z",
     "price":1000, 

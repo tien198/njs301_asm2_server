@@ -7,11 +7,11 @@ const nestedRoom = {
 
 const transactionSchema = new Schema({
     user: {
-        userId: { type: Schema.Types.ObjectId, require: true, ref: 'User' },
+        userRef: { type: Schema.Types.ObjectId, require: true, ref: 'User' },
         userName: { type: String, require: true },
 
     },
-    hotelId: { type: String, require: true },
+    hotelRef: { type: Schema.Types.ObjectId, require: true, ref: 'Hotel' },
     rooms: [nestedRoom],
     startDate: { type: Date, require: true },
     endDate: { type: Date, require: true },
