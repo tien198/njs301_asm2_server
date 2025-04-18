@@ -18,7 +18,7 @@ export async function checkBookedRooms(req, res, next) {
             throw Error('Invalid startDate or endDate')
 
         const exTrans = await Transaction.find({
-            hotelId: hotelId,
+            hotelRef: hotelId,
             startDate: { $gte: startDate },
             endDate: { $lte: endDate }
         })

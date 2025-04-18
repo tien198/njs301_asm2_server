@@ -27,7 +27,7 @@ POST http://localhost:5000/check-booked-rooms HTTP/1.1
 Content-Type: application/json
 
 {
-    "hotelId":"6311a9c64a642f01423490bf",   
+    "hotelId":"67f60e7342f92ecc21e43269",   
     "startDate": "2025-04-09T07:40:37.890Z",
     "endDate": "2025-04-09T08:20:37.890Z"
 }
