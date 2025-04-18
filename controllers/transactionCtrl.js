@@ -38,7 +38,6 @@ export async function checkBookedRooms(req, res, next) {
 
         res.status(200).json(roomGroups)
     } catch (err) {
-        error(err)
         return next(err)
     }
 }
@@ -95,14 +94,14 @@ export async function addTransaction(req, res, next) {
         }
 
         const userObj = {
-            userRef: ObjectId.createFromHexString(user.userId),
+            userRef: user.userId,
             userName: user.userName
         }
-        const hotelRef = ObjectId.createFromHexString(hotelId)
 
-        await Transaction.insertOne({
+        await Transaction.create({
             user: userObj, rooms: reqRooms,
-            hotelRef, startDate, endDate, price, payment
+            hotelRef: hotelId,
+            startDate, endDate, price, payment
         })
         return res.status(201).json('Booking success!')
 
@@ -116,7 +115,7 @@ export async function getTransactions(req, res, next) {
     try {
         const { userId } = req.body
         const trans = await Transaction.find({ 'user.userRef': userId }).populate('hotelRef', '-_id name').select('-user')
-        
+
         res.status(200).json(trans)
 
     } catch (err) {
