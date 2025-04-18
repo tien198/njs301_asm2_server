@@ -111,7 +111,10 @@ export async function addTransaction(req, res, next) {
 export async function getTransactions(req, res, next) {
     try {
         const { userId } = req.body
+        // if using populate query in nested doc
+        // const trans = await Transaction.find({ 'user.userId': userId }).populate('user.userId', 'userName')
         const trans = await Transaction.find({ 'user.userId': userId }).lean()
+        
         res.status(200).json(trans)
 
     } catch (err) {
