@@ -54,7 +54,7 @@ app.use(typesRouter)
 app.use(hotelsRouter)
 app.use(transactionRouter)
 
-app.use(adminRouter)
+app.use('/admin',adminRouter)
 
 app.use((error, req, res, next) => {
     console.error(error)
