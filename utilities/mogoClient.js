@@ -24,3 +24,7 @@ export async function connect() {
 export function getHotelsCol() {
     return client.db('asm2').collection('hotels')
 }
+
+export function getTransactionCol(){
+    return client.db('asm2').collection('transactions')
+}

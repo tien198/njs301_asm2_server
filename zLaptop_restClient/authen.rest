@@ -16,10 +16,19 @@ Content-Type: application/json
 }
 
 ###
+POST http://localhost:5000/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "userName": "admin@gmail.com",
+    "password": "123123"
+}
+
+###
 POST http://localhost:5000/sign-up HTTP/1.1
 Content-Type: application/json
 
 {
-    "userName": "fawals98@gmail.com",
-    "password": "123456"
+    "userName": "admin@gmail.com",
+    "password": "123123"
 }
