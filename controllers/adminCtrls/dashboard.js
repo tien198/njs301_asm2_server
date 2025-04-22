@@ -5,7 +5,7 @@ import { getTransactionCol } from '../../utilities/mogoClient.js'
 export async function getUsersTotal(req, res, next) {
     try {
         const count = await User.countDocuments()
-        res.status(200).json({ count })
+        res.status(200).json(count)
     }
     catch (err) {
         next(err)
@@ -15,7 +15,7 @@ export async function getUsersTotal(req, res, next) {
 export async function getTransactionsTotal(req, res, next) {
     try {
         const count = await Transaction.countDocuments()
-        res.status(200).json({ count })
+        res.status(200).json(count)
     }
     catch (err) {
         next(err)
@@ -26,7 +26,7 @@ export async function getRevenueTotal(req, res, next) {
     try {
         const trans = await Transaction.find().select('price -_id').lean()
         const revenueTotal = trans.reduce((acc, curr) => acc + curr.price, 0)
-        res.status(201).json({ revenueTotal })
+        res.status(201).json(revenueTotal)
     } catch (err) {
         next(err)
     }
@@ -36,7 +36,7 @@ export async function getBalance(req, res, next) {
     try {
         const trans = await Transaction.find().select('price -_id').lean()
         const balance = trans.reduce((acc, curr) => acc + curr.price, 0)
-        res.status(201).json({ balance })
+        res.status(201).json(balance)
     } catch (err) {
         next(err)
     }
