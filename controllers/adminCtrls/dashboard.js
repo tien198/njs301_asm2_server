@@ -45,7 +45,7 @@ export async function getBalance(req, res, next) {
 export async function getLastTransactions(req, res, next) {
     try {
         const lastTrans = await Transaction.find().sort({ _id: -1 }).limit(8).lean()
-        res.status(200).json({ lastTransactions: lastTrans })
+        res.status(200).json(lastTrans)
     } catch (err) {
         next(err)
     }
