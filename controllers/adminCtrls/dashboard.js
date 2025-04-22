@@ -44,7 +44,7 @@ export async function getBalance(req, res, next) {
 
 export async function getLastTransactions(req, res, next) {
     try {
-        const lastTrans = await Transaction.find().sort({ _id: -1 }).limit(8).lean()
+        const lastTrans = await Transaction.find().sort({ _id: -1 }).limit(8).populate('hotelRef', '-_id name').lean()
         res.status(200).json(lastTrans)
     } catch (err) {
         next(err)
