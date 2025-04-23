@@ -14,7 +14,7 @@ import citiesRouter from './routes/citiesRouter.js'
 import typesRouter from './routes/typeRouter.js'
 import hotelsRouter from './routes/hotelsRouter.js'
 import transactionRouter from './routes/transactionRouter.js'
-import adminRouter from './routes/adminRoutes/dashboard.js'
+import adminRouter from './routes/adminRoutes/index.js'
 import ErrorRespone from './models/dataModels/errorRespone.js'
 
 
@@ -48,13 +48,11 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 
 
-app.use(authenRouter)
-app.use(citiesRouter)
-app.use(typesRouter)
-app.use(hotelsRouter)
-app.use(transactionRouter)
+app.use(
+    authenRouter, citiesRouter, typesRouter, hotelsRouter, transactionRouter
+)
 
-app.use('/admin',adminRouter)
+app.use('/admin', adminRouter)
 
 app.use((error, req, res, next) => {
     console.error(error)

@@ -6,14 +6,19 @@ import { getHotelsCol } from '../utilities/mogoClient.js'
 import { ObjectId } from 'mongodb'
 
 
-export function getHotels(req, res, next) {
-    Hotel.find()
-        .then(hotels => {
-            res.status(200).json(hotels);
-        })
-        .catch(err => {
-            error(err); next(err)
-        });
+
+export async function getHotels(req, res, next) {
+    try {
+        const page = +req.query.page || 0
+        const docsPerPage = +req.query.docsPerPage || 4
+
+        const skipTotal = page * docsPerPage
+        const hotels = await Hotel.find().skip(skipTotal).limit(docsPerPage).lean()
+        res.status(200).json(hotels)
+    }
+    catch (err) {
+        next(err)
+    }
 }
 
 export async function getHotel(req, res, next) {
@@ -27,7 +32,7 @@ export async function getHotel(req, res, next) {
                 $lookup: {
                     from: 'rooms',
                     let: { hotel_rooms: '$rooms' },
-                    pipeline:[
+                    pipeline: [
                         {
                             $match: {
                                 $expr: {
