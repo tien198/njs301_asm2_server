@@ -2,8 +2,6 @@ import { Router } from 'express'
 
 import adminCtrls from '../../controllers/adminCtrls/index.js'
 
-import User from '../../models/user.js'
-import Transaction from '../../models/transaction.js'
 
 const router = Router()
 

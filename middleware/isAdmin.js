@@ -1,4 +1,4 @@
-import ErrorRespone from '../models/dataModels/errorRespone.js'
+import ErrorRespone from '../models/dataModels/ErrorRespone.js'
 
 export default function isAdmin(req, res, next) {
     try {

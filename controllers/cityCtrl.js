@@ -1,4 +1,4 @@
-import City from '../models/city.js'
+import City from '../models/City.js'
 
 export function getCities(req, res) {
     City.find()

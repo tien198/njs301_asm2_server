@@ -1,7 +1,7 @@
 import { error, log } from 'console'
 import { ObjectId } from 'mongodb'
 
-import Transaction from '../models/transaction.js'
+import Transaction from '../models/Transaction.js'
 
 import { groupRooms } from './utils/transactionUtils.js'
 

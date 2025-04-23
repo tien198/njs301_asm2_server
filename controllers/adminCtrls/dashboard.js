@@ -1,6 +1,5 @@
-import User from '../../models/user.js'
-import Transaction from '../../models/transaction.js'
-import { getTransactionCol } from '../../utilities/mogoClient.js'
+import User from '../../models/User.js'
+import Transaction from '../../models/Transaction.js'
 
 export async function getUsersTotal(req, res, next) {
     try {

@@ -1,6 +1,6 @@
 import { error, log } from 'console'
 
-import Hotel from '../models/hotel.js';
+import Hotel from '../models/Hotel.js';
 import { getHotelsCol } from '../utilities/mogoClient.js'
 
 import { ObjectId } from 'mongodb'
@@ -13,7 +13,7 @@ export async function getHotels(req, res, next) {
         const docsPerPage = +req.query.docsPerPage || 4
 
         const skipTotal = page * docsPerPage
-        const hotels = await Hotel.find().skip(skipTotal).limit(docsPerPage).lean()
+        const hotels = await Hotel.find().skip(skipTotal).limit(docsPerPage).select('name type cheapestPrice rating type photos').lean()
         res.status(200).json(hotels)
     }
     catch (err) {

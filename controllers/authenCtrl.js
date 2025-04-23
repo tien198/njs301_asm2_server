@@ -1,9 +1,9 @@
 import { hashSync, compareSync } from 'bcrypt'
 import { log, error } from 'console';
 
-import User from '../models/user.js'
-import JwtPayload from '../models/dataModels/jwtPayload.js'
-import ErrorRespone from '../models/dataModels/errorRespone.js'
+import User from '../models/User.js'
+import JwtPayload from '../models/dataModels/JwtPayload.js'
+import ErrorRespone from '../models/dataModels/ErrorRespone.js'
 import { jwtGen } from '../utilities/jwtToken.js';
 
 
