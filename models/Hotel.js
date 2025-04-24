@@ -9,6 +9,7 @@ const hotelSchema = new Schema({
     },
     city: { type: String, require: true },
     address: { type: String, require: true },
+    distance: { type: Number, require: true },
     photos: { type: [String] },
     desc: { type: String, require: true },
     rating: { type: Number, enum: [0, 1, 2, 3, 4, 5] },
