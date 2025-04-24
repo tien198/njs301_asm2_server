@@ -47,13 +47,9 @@ export async function deleteHotel(req, res, next) {
     }
 }
 
-export async function addHotel (req, res, next) {
-    const hotel = req.body
-    const hotelObjectFormat = {
-        name: '', type: '', city: '', address: '', distance: '',
-        photos: [], desc: '', rating: '', featured: '', rooms: '',
-    }
-    log(hotel)
+export async function addHotel(req, res, next) {
+    const hotel = req.body  // Hotel.schema
+
     try {
         if (!hotel)
             throw new ErrorRespone('Request body must have \'hotel\' field')

@@ -1,8 +1,8 @@
 import Mongoose, { Schema } from 'mongoose';
 
 const userSchema = new Schema({
-    userName: { type: String, require: true },
-    password: { type: String, require: true },
+    userName: { type: String, required: true },
+    password: { type: String, required: true },
     fullName: { type: String, default: '' },
     phoneNumber: { type: String },
     email: { type: String, default: '' },

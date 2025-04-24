@@ -1,7 +1,7 @@
 import Mogoose, { Schema } from 'mongoose'
 
 const typeSchema = new Schema({
-    name: { type: String, require: true },
+    name: { type: String, required: true },
     count: { type: Number },
     image: { type: String }
 })

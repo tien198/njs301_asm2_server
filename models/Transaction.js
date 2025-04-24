@@ -7,16 +7,16 @@ const nestedRoom = {
 
 const transactionSchema = new Schema({
     user: {
-        userRef: { type: Schema.Types.ObjectId, require: true, ref: 'User' },
-        userName: { type: String, require: true },
+        userRef: { type: Schema.Types.ObjectId, required: true, ref: 'User' },
+        userName: { type: String, required: true },
 
     },
-    hotelRef: { type: Schema.Types.ObjectId, require: true, ref: 'Hotel' },
+    hotelRef: { type: Schema.Types.ObjectId, required: true, ref: 'Hotel' },
     rooms: [nestedRoom],
-    startDate: { type: Date, require: true },
-    endDate: { type: Date, require: true },
-    price: { type: Number, require: true },
-    payment: { type: String, enum: ['Credit', 'Card', 'Cash'], require: true },
+    startDate: { type: Date, required: true },
+    endDate: { type: Date, required: true },
+    price: { type: Number, required: true },
+    payment: { type: String, enum: ['Credit', 'Card', 'Cash'], required: true },
     status: { type: String, enum: ['Booked', 'Checkin', 'Checkout'], default: 'Booked' }
 })
 
