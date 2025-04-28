@@ -1,5 +1,5 @@
-import User from '../../models/User.js'
-import Transaction from '../../models/Transaction.js'
+import User from '../../models/mogooseModels/User.js'
+import Transaction from '../../models/mogooseModels/Transaction.js'
 
 export async function getUsersTotal(req, res, next) {
     try {

@@ -1,4 +1,4 @@
-import Type from '../models/Type.js';
+import Type from '../models/mogooseModels/Type.js';
 
 export function getTypes(req, res) {
     Type.find()

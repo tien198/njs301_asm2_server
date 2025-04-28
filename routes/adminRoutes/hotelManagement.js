@@ -2,8 +2,8 @@ import { Router } from 'express'
 import { log } from 'console'
 
 import adminCtrls from '../../controllers/adminCtrls/index.js'
-import Hotel from '../../models/Hotel.js'
-import ErrorRespone from '../../models/dataModels/ErrorRespone.js'
+import Hotel from '../../models/mogooseModels/Hotel.js'
+import ErrorRespone from '../../models/ErrorRespone.js'
 
 
 const router = Router()

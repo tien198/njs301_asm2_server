@@ -15,7 +15,7 @@ import typesRouter from './routes/typeRouter.js'
 import hotelsRouter from './routes/hotelsRouter.js'
 import transactionRouter from './routes/transactionRouter.js'
 import adminRouter from './routes/adminRoutes/index.js'
-import ErrorRespone from './models/dataModels/ErrorRespone.js'
+import ErrorRespone from './models/ErrorRespone.js'
 
 
 

@@ -1,4 +1,4 @@
-import City from '../models/City.js'
+import City from '../models/mogooseModels/City.js'
 
 export function getCities(req, res) {
     City.find()

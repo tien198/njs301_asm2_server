@@ -1,5 +1,5 @@
-import JwtPayload from '../models/dataModels/JwtPayload.js'
-import ErrorRespone from '../models/dataModels/ErrorRespone.js'
+import JwtPayload from '../models/JwtPayload.js'
+import ErrorRespone from '../models/ErrorRespone.js'
 
 import { jwtVerify } from '../utilities/jwtToken.js';
 

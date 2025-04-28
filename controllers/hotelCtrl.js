@@ -1,6 +1,6 @@
 import { error, log } from 'console'
 
-import Hotel from '../models/Hotel.js';
+import Hotel from '../models/mogooseModels/Hotel.js';
 import { getHotelsCol } from '../utilities/mogoClient.js'
 
 import { ObjectId } from 'mongodb'

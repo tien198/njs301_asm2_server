@@ -1,6 +1,6 @@
-import Hotel from "../../models/Hotel.js"
-import Transaction from '../../models/Transaction.js'
-import ErrorResponse from '../../models/dataModels/ErrorRespone.js'
+import Hotel from "../../models/mogooseModels/Hotel.js"
+import Transaction from '../../models/mogooseModels/Transaction.js'
+import ErrorResponse from '../../models/ErrorRespone.js'
 
 
 export async function getHotelCount(req, res, next) {
