@@ -11,10 +11,10 @@ import mongodb from './utilities/mogoClient.js'
 
 import authenRouter from './routes/authenRouter.js'
 import citiesRouter from './routes/citiesRouter.js'
-import typesRouter from './routes/typeRouter.js'
+import typesRouter from './routes/admin/typeRouter.js'
 import hotelsRouter from './routes/hotelsRouter.js'
 import transactionRouter from './routes/transactionRouter.js'
-import adminRouter from './routes/adminRoutes/index.js'
+import adminRouter from './routes/admin/index.js'
 import ErrorRespone from './models/ErrorRespone.js'
 
 

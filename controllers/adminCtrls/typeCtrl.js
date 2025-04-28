@@ -1,11 +1,10 @@
-import Type from '../models/mogooseModels/Type.js';
+import Type from '../../models/mogooseModels/Type.js';
 
 export function getTypes(req, res) {
-    Type.find()
+    Type.find().select('name').lean()
         .then(types => res.status(200).json(types))
         .catch(err => {
-            error(err)
-            res.status(500).json({ error: err });
+            next(err)
         })
 }
 
