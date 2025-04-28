@@ -1,6 +1,7 @@
-import dashboard from './dashboard.js'
-import hotelManagement from './hotelManagement.js'
+import dashboardCtrl from './dashboardCtrl.js'
+import hotelCtl from './hotelCtrls.js'
+import roomCtrl from './roomCtrl.js'
 
 
 
-export default { ...dashboard, ...hotelManagement }
+export default { ...dashboardCtrl, ...hotelCtl, ...roomCtrl }
