@@ -9,7 +9,7 @@ router.post('/check-booked-rooms', tranCtrl.checkBookedRooms)
 
 router.use(isAuth)
 
-// { userId: String }
+// body: { userId: String }, query: page=0 & docsPerPage=10
 router.post('/get-transactions', tranCtrl.getTransactions)
 
 router.post('/add-transaction', tranCtrl.addTransaction)

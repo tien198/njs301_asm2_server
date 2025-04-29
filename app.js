@@ -9,6 +9,8 @@ import { fileURLToPath } from 'url'
 
 import mongodb from './utilities/mogoClient.js'
 
+import uriLowerCase from './middleware/uriLowerCase.js'
+
 import authenRouter from './routes/authenRouter.js'
 import citiesRouter from './routes/citiesRouter.js'
 import typesRouter from './routes/admin/typeRouter.js'
@@ -46,7 +48,8 @@ app.use(express.static(path.join(__dirname, 'public')))
 //     }, 3000);
 // })
 
-
+// convert all input url to lower case
+app.use(uriLowerCase)
 
 app.use(
     authenRouter, citiesRouter, typesRouter, hotelsRouter, transactionRouter

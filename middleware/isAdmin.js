@@ -1,6 +1,6 @@
 import ErrorRespone from '../models/ErrorRespone.js'
 
-export default function isAdmin(req, res, next) {
+export default async function isAdmin(req, res, next) {
     try {
         const isAdmin = req.user?.isAdmin
         if (!isAdmin)

@@ -7,6 +7,7 @@ import hotelCtrl, { getHotels } from '../controllers/hotelCtrl.js'
 
 const router = Router()
 
+// query: /?page=0 & docs-per-page=10
 router.get('/hotels', hotelCtrl.getHotels)
 
 router.get('/hotel/:hotelId', hotelCtrl.getHotel)

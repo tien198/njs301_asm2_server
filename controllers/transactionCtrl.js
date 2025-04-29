@@ -4,6 +4,7 @@ import { ObjectId } from 'mongodb'
 import Transaction from '../models/mogooseModels/Transaction.js'
 
 import { groupRooms } from './utils/transactionUtils.js'
+import ErrorRespone from '../models/ErrorRespone.js'
 
 
 
@@ -111,10 +112,20 @@ export async function addTransaction(req, res, next) {
 }
 
 // get Transaction according userId
+// api: POST /get-transactions
+// body: { userId: String }, query: page=0 & docs-per-page=10
 export async function getTransactions(req, res, next) {
     try {
         const { userId } = req.body
-        const trans = await Transaction.find({ 'user.userRef': userId }).populate('hotelRef', '-_id name').select('-user')
+        const page = +req.query.page || 0
+        const docsPerPage = +req.query['docs-per-page'] || 10
+
+        if (!userId)
+            throw new ErrorRespone(`request body must have 'userId' field`, 400)
+
+        const trans = await Transaction.find({ 'user.userRef': userId })
+            .skip(page * docsPerPage).limit(docsPerPage)
+            .populate('hotelRef', '-_id name').select('-user').lean()
 
         res.status(200).json(trans)
 

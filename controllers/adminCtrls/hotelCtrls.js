@@ -12,9 +12,11 @@ export async function getHotelCount(req, res, next) {
     }
 }
 
+// api: GET /admin/get-hotels
+// query: page=0&docs-per-page=10
 export async function getHotels(req, res, next) {
-    const page = +req.query.page ?? 0
-    const docsPerPage = +req.query ?? 10
+    const page = +req.query.page || 0
+    const docsPerPage = +req.query['docs-per-page'] || 10
 
     try {
         const hotels = await Hotel.find()
