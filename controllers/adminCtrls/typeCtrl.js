@@ -1,6 +1,6 @@
 import Type from '../../models/mogooseModels/Type.js';
 
-export function getTypes(req, res) {
+export function getTypeNames(req, res) {
     Type.find().select('name').lean()
         .then(types => res.status(200).json(types))
         .catch(err => {
@@ -8,4 +8,4 @@ export function getTypes(req, res) {
         })
 }
 
-export default { getTypes }
+export default { getTypeNames }

@@ -5,6 +5,7 @@ import adminCtrls from '../../controllers/adminCtrls/index.js'
 
 const router = Router()
 
-router.get('/get-types', adminCtrls.getTypes)
+router.get('/get-type-names-list', adminCtrls.getTypeNames)
+
 
 export default router

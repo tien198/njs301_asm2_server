@@ -5,8 +5,7 @@ const roomSchema = new Schema({
     price: { type: Number, required: true },
     maxPeople: { type: Number},
     desc: { type: String },
-    roomNumber: { type: Number, required: true },
-    // booked
+    roomNumbers: { type: [String], required: true },
 })
 
 export default Mongoose.model('Room', roomSchema)
