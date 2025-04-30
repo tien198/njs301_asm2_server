@@ -3,7 +3,7 @@ import adminCtrls from '../../controllers/adminCtrls/index.js'
 
 const router = Router()
 
-router.get('/get-room-titles-list', adminCtrls.getRoomTitlesList)
+router.get('/get-room-titles', adminCtrls.getRoomTitles)
 
 router.get('/get-rooms', adminCtrls.getRooms)
 

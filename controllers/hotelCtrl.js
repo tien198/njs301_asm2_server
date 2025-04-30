@@ -7,11 +7,11 @@ import { ObjectId } from 'mongodb'
 
 
 // api: /hotels
-// query: /?page=0 & docs-per-page=10
+// query: /?page=0 & limit=10
 export async function getHotels(req, res, next) {
     try {
         const page = +req.query.page || 0
-        const docsPerPage = +req.query['docs-per-page'] || 4
+        const docsPerPage = +req.query['limit'] || 4
 
         const skipTotal = page * docsPerPage
         const hotels = await Hotel.find().skip(skipTotal).limit(docsPerPage).select('name type cheapestPrice rating type photos').lean()

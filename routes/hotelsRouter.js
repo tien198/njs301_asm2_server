@@ -1,13 +1,12 @@
 import { Router } from 'express'
-import { error } from 'console'
 
-import hotelCtrl, { getHotels } from '../controllers/hotelCtrl.js'
+import hotelCtrl from '../controllers/hotelCtrl.js'
 
-// import Hotel from '../models/hotel.js'
+
 
 const router = Router()
 
-// query: /?page=0 & docs-per-page=10
+// query: /?page=0 & limit=10
 router.get('/hotels', hotelCtrl.getHotels)
 
 router.get('/hotel/:hotelId', hotelCtrl.getHotel)

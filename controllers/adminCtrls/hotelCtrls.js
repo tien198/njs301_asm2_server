@@ -13,10 +13,10 @@ export async function getHotelCount(req, res, next) {
 }
 
 // api: GET /admin/get-hotels
-// query: page=0&docs-per-page=10
+// query: page=0&limit=10
 export async function getHotels(req, res, next) {
     const page = +req.query.page || 0
-    const docsPerPage = +req.query['docs-per-page'] || 10
+    const docsPerPage = +req.query['limit'] || 10
 
     try {
         const hotels = await Hotel.find()
@@ -63,6 +63,21 @@ export async function addHotel(req, res, next) {
     }
 }
 
+// api: GET /admin/get-hotel-names
+// query: page=0&limit=10
+export async function getHotelNames(req, res, next) {
+    const page = +req.query.page || 0
+    const docsPerPage = +req.query['limit'] || 10
+
+    try {
+        const hotels = await Hotel.find()
+            .skip(page * docsPerPage).limit(docsPerPage)
+            .select('name').lean()
+        res.status(200).json(hotels)
+    } catch (err) {
+        next(err)
+    }
+}
 
 
-export default { getHotelCount, getHotels, deleteHotel, addHotel }
+export default { getHotelCount, getHotels, deleteHotel, addHotel, getHotelNames }

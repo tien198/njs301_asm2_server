@@ -5,7 +5,7 @@ import Transaction from '../../models/mogooseModels/Transaction.js'
 
 
 
-async function getRoomTitlesList(req, res, next) {
+async function getRoomTitles(req, res, next) {
     try {
         const rooms = await Room.find().select('title').lean()
         res.status(200).json(rooms)
@@ -52,7 +52,6 @@ async function addRoom(req, res, next) {
     try {
         // req.body is { ...RoomSchema, hotelId}
         const room = req.body
-        const roomId = room.roomId
         const hotelId = room.hotelId
         if (!hotelId)
             throw new ErrorRespone('request body must have \'hotelId\' field!', 400)
@@ -62,8 +61,8 @@ async function addRoom(req, res, next) {
         if (!hotel)
             throw new ErrorRespone(`Not found hotel has id: ${hotelId}!`, 404)
 
-        const created = await Room.create({ ...room })
-        hotel.rooms = [...hotel.rooms, roomId]
+        const createdRoom = await Room.create({ ...room })
+        hotel.rooms = [...hotel.rooms, createdRoom._id.toString()]
         const savedHotel = await hotel.save()
         if (!savedHotel)
             throw new ErrorRespone(`Couldn't add created room to defined hotel! Please add room to hotel manually!`)
@@ -74,4 +73,4 @@ async function addRoom(req, res, next) {
     }
 }
 
-export default { getRoomTitlesList, getRooms, deleteRoom, addRoom }
+export default { getRoomTitles, getRooms, deleteRoom, addRoom }
