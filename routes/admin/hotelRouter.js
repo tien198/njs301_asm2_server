@@ -16,6 +16,7 @@ router.get('/get-hotel-names', adminCtrls.getHotelNames)
 
 router.delete('/delete-hotel/:hotelId', adminCtrls.deleteHotel)
 
+// req.body: { ...Hotel.schema }
 router.post('/add-hotel', adminCtrls.addHotel)
 
 

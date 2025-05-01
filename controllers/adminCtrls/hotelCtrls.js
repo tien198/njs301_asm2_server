@@ -49,8 +49,9 @@ export async function deleteHotel(req, res, next) {
     }
 }
 
+// req.body: { ...Hotel.schema }
 export async function addHotel(req, res, next) {
-    const hotel = req.body  // Hotel.schema
+    const hotel = req.body
 
     try {
         if (!hotel)
