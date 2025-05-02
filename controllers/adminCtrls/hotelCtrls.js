@@ -35,7 +35,7 @@ export async function deleteHotel(req, res, next) {
             throw new ErrorResponse('Uri must have \'hotelId\' param!', 400)
 
         // check if hotel was booked
-        const isAnyBooked = Transaction.findOne({ hotelRef: hotelId, status: { $ne: 'Checkout' } })
+        const isAnyBooked = await Transaction.findOne({ hotelRef: hotelId, status: { $ne: 'Checkout' } }).lean()
         if (isAnyBooked)
             throw new ErrorResponse('The hotel was booked at the time!', 400, { wasBooked: true })
 
