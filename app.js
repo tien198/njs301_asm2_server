@@ -13,7 +13,7 @@ import uriLowerCase from './middleware/uriLowerCase.js'
 
 import authenRouter from './routes/authenRouter.js'
 import citiesRouter from './routes/citiesRouter.js'
-import typesRouter from './routes/admin/typeRouter.js'
+import typesRouter from './routes/typeRouter.js'
 import hotelsRouter from './routes/hotelsRouter.js'
 import transactionRouter from './routes/transactionRouter.js'
 import adminRouter from './routes/admin/index.js'
