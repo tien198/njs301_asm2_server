@@ -20,8 +20,8 @@ export async function checkBookedRooms(req, res, next) {
 
         const exTrans = await Transaction.find({
             hotelRef: hotelId,
-            startDate: { $gte: startDate },
-            endDate: { $lte: endDate }
+            startDate: { $lte: endDate },
+            endDate: { $gte: startDate }
         })
             .select('rooms -_id')
             .lean()
@@ -43,7 +43,7 @@ export async function checkBookedRooms(req, res, next) {
     }
 }
 
-//  booking <= ________________|start _________ <= booking <= ____________ | end
+//  strart <= _____________ <= s-booking-e <= ____________ | end
 
 export async function addTransaction(req, res, next) {
     try {
